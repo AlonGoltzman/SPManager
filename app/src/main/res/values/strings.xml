@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SharedPreferencesManagerDemo</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="value">New Value</string>
+    <string name="submit">Test</string>
+    <array name="values">
+        <item>Test 1 - toast</item>
+        <item>Test 2 - google</item>
+        <item>Test 3 - chooser for internet</item>
+        <item>Test 4 - toast</item>
+    </array>
+</resources>
