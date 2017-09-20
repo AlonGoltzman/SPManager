@@ -1,4 +1,4 @@
-package com.sharedpreferencesmanager.processors;
+package com.aongoltzcrank.sharedpreferencesmanager.processors;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -1,6 +1,6 @@
-package com.sharedpreferencesmanager.processors;
+package com.aongoltzcrank.sharedpreferencesmanager.processors;
 
-import com.sharedpreferencesmanager.annotations.SPUpdateTarget;
+import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPUpdateTarget;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -29,17 +29,18 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
-import static com.sharedpreferencesmanager.processors.SPManagerProcessor.defaultSPMName;
+import static com.aongoltzcrank.sharedpreferencesmanager.processors.SPManagerProcessor.debug;
+import static com.aongoltzcrank.sharedpreferencesmanager.processors.SPManagerProcessor.defaultSPMName;
 import static javax.tools.Diagnostic.Kind.ERROR;
 import static javax.tools.Diagnostic.Kind.NOTE;
 
 
-@SupportedAnnotationTypes("com.sharedpreferencesmanager.annotations.SPListener")
+@SupportedAnnotationTypes("com.aongoltzcrank.sharedpreferencesmanager.annotations.SPListener")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class SPListenerProcessor extends AbstractProcessor {
 
-    private static final String listenerAnnotationRef = "com.sharedpreferencesmanager.annotations.SPListener";
-    private static final String targetAnnotationRef = "com.sharedpreferencesmanager.annotations.SPUpdateTarget";
+    private static final String listenerAnnotationRef = "com.aongoltzcrank.sharedpreferencesmanager.annotations.SPListener";
+    private static final String targetAnnotationRef = "com.aongoltzcrank.sharedpreferencesmanager.annotations.SPUpdateTarget";
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -206,6 +207,7 @@ public class SPListenerProcessor extends AbstractProcessor {
     }
 
     private void print(Diagnostic.Kind kind, String msg) {
-        processingEnv.getMessager().printMessage(kind, msg);
+        if (debug)
+            processingEnv.getMessager().printMessage(kind, msg);
     }
 }

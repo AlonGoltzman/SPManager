@@ -13,10 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class SPManager {
+public class SharedPreferencesManager {
 
 
-    private static final String TAG = SPManager.class.getSimpleName();
+    private static final String TAG = SharedPreferencesManager.class.getSimpleName();
 
     private final String[] listeners = new String[]{
             %$PLACEHOLDER$%
@@ -26,13 +26,13 @@ public class SPManager {
     private List<UpdateListener> updateListeners;
 
     //==========================================================================
-    private static SPManager mInstance;
+    private static SharedPreferencesManager mInstance;
 
-    public static SPManager getInstance(SharedPreferences sp) {
-        return mInstance == null ? new SPManager(sp) : mInstance;
+    public static SharedPreferencesManager getInstance(SharedPreferences sp) {
+        return mInstance == null ? new SharedPreferencesManager(sp) : mInstance;
     }
 
-    private SPManager(SharedPreferences sp) {
+    private SharedPreferencesManager(SharedPreferences sp) {
         mInstance = this;
         mPrefs = sp;
         updateListeners = new LinkedList<>();
@@ -54,7 +54,7 @@ public class SPManager {
      * @return - the instance in order to create an ability to update multiple keys in one go.
      */
     @SuppressWarnings("unchecked")
-    public SPManager update(Context context, String key, Object value) {
+    public SharedPreferencesManager update(Context context, String key, Object value) {
         SharedPreferences.Editor editor = mPrefs.edit();
         if (value instanceof String)
             editor.putString(key, value.toString());

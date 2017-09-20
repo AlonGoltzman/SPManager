@@ -1,6 +1,6 @@
 package com.sharedpreferencesmanagerdemo;
 
-import com.sharedpreferencesmanager.annotations.SPManager;
+import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPManager;
 
 @SPManager
 class SPModule {

@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.sharedpreferencesmanager.generated.SPManager;
+import com.sharedpreferencesmanager.generated.SharedPreferencesManager;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mSPValue;
     private Button mSubmit;
 
-    private SPManager mMgr;
+    private SharedPreferencesManager mMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mSubmit.setOnClickListener(this);
 
-        mMgr = SPManager.getInstance(getSharedPreferences(getPackageName(), MODE_APPEND));
+        mMgr = SharedPreferencesManager.getInstance(getSharedPreferences(getPackageName(), MODE_APPEND));
     }
 
     @Override

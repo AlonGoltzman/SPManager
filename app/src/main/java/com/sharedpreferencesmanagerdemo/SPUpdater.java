@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.sharedpreferencesmanager.annotations.SPListener;
-import com.sharedpreferencesmanager.annotations.SPUpdateTarget;
+import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPListener;
+import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPUpdateTarget;
 
 @SPListener
 class SPUpdater {

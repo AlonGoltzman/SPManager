@@ -1,4 +1,4 @@
-package com.sharedpreferencesmanager.processors;
+package com.aongoltzcrank.sharedpreferencesmanager.processors;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -17,11 +17,13 @@ import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
-@SupportedAnnotationTypes("com.sharedpreferencesmanager.annotations.SharedPreferencesManager")
+@SupportedAnnotationTypes("com.aongoltzcrank.sharedpreferencesmanager.annotations.SPManager")
 public class SPManagerProcessor extends AbstractProcessor {
 
-    static final String defaultSPMName = "com.sharedpreferencesmanager.generated.SPManager";
-    private static final String annotationRef = "com.sharedpreferencesmanager.annotations.SharedPreferencesManager";
+    static final boolean debug = false;
+
+    static final String defaultSPMName = "com.sharedpreferencesmanager.generated.SharedPreferencesManager";
+    private static final String annotationRef = "com.aongoltzcrank.sharedpreferencesmanager.annotations.SPManager";
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
