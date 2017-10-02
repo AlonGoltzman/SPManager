@@ -1,0 +1,88 @@
+package com.sharedpreferencesmanager.generated;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.Iterator;
+import java.util.Set;
+
+public class SharedPreferencesManager {
+
+
+    private static final String TAG = SharedPreferencesManager.class.getSimpleName();
+
+    private SharedPreferences mPrefs;
+
+    %$PLACEHOLDER$%
+
+    //==========================================================================
+    private static SharedPreferencesManager mInstance;
+
+    public static SharedPreferencesManager getInstance(SharedPreferences sp) {
+        return mInstance == null ? new SharedPreferencesManager(sp) : mInstance;
+    }
+
+    private SharedPreferencesManager(SharedPreferences sp) {
+        mInstance = this;
+        mPrefs = sp;
+        %$PLACEHOLDER$%
+    }
+    //==========================================================================
+
+    /**
+     * Sets a new value in the shared preferences.
+     * Notifies all listeners for this key that the value is updated to a new one.
+     *
+     * @param context
+     *         - the context to be passed to the listener in order for it to be able to perform actions on UI or send a broadcast.
+     * @param key
+     *         - the SharedPreferences key.
+     * @param value
+     *         - the value to be updated.
+     *
+     * @return - the instance in order to create an ability to update multiple keys in one go.
+     */
+    @SuppressWarnings("unchecked")
+    public SharedPreferencesManager update(Context context, String key, Object value) {
+        SharedPreferences.Editor editor = mPrefs.edit();
+        if (value instanceof String)
+            editor.putString(key, value.toString());
+        else if (value instanceof Float)
+            editor.putFloat(key, Float.parseFloat(value.toString()));
+        else if (value instanceof Boolean)
+            editor.putBoolean(key, Boolean.parseBoolean(value.toString()));
+        else if (value instanceof Long)
+            editor.putLong(key, Long.parseLong(value.toString()));
+        else if (value instanceof Integer)
+            editor.putInt(key, Integer.parseInt(value.toString()));
+        else if (value instanceof Set) {
+            if (((Set) value).size() > 0) {
+                Iterator<?> iter = ((Set) value).iterator();
+                Object iterValue = iter.next();
+                if (iterValue instanceof String)
+                    editor.putStringSet(key, (Set<String>) value);
+            } else
+                throw new IllegalArgumentException("Set passed in with no values.");
+        } else
+            throw new IllegalArgumentException("Only String, Float, Boolean, Serializable & Integer types are allowed.");
+        editor.apply();
+        %$PLACEHOLDER$%
+        return this;
+    }
+
+    /**
+     * Gets a value for a key.
+     *
+     * @param key
+     *         - the SharedPreferences key.
+     *
+     * @return - the value associated with the key.
+     */
+    public Object get(String key) {
+        return mPrefs.getAll().get(key);
+    }
+
+
+
+
+}

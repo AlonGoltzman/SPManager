@@ -16,3 +16,5 @@ publish {
     website = 'https://github.com/AlonGoltzman/SPManager.git'
     repoName = 'SPManager'
 }
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'

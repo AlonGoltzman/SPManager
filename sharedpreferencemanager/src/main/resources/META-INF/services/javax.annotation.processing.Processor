@@ -1,2 +1,1 @@
-com.aongoltzcrank.sharedpreferencesmanager.processors.SPListenerProcessor
-com.aongoltzcrank.sharedpreferencesmanager.processors.SPManagerProcessor
+com.aongoltzcrank.sharedpreferencesmanager.processors.SPProcessor

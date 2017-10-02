@@ -9,7 +9,6 @@ import android.widget.Spinner;
 
 import com.sharedpreferencesmanager.generated.SharedPreferencesManager;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String[] SP_VALUES = {"test1", "test2", "test3", "test4"};

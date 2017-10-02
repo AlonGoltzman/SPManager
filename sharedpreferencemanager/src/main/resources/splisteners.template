@@ -1,0 +1,134 @@
+package com.sharedpreferencesmanager.generated;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
+
+class SharedPreferencesListeners {
+
+    private LinkedList<UpdateListener> mUpdateTargets;
+
+    private final String[] listeners = new String[]{
+    	%$PLACEHOLDER$%
+    };
+
+    private static SharedPreferencesListeners mInstance;
+
+    static SharedPreferencesListeners getInstance() {
+        return mInstance == null ? new SharedPreferencesListeners() : mInstance;
+    }
+
+    private SharedPreferencesListeners() {
+        mInstance = this;
+        mUpdateTargets = new LinkedList<UpdateListener>();
+        createListeners();
+    }
+
+
+    void updated(Context context, String key, Object value) {
+        for (UpdateListener listener : mUpdateTargets)
+            for (int i = 0; i < listener.getUpdateMethodsKeys().size(); i++) {
+                String str = listener.getUpdateMethodsKeys().get(i);
+                String[] keys = str.replace("[", "").replace("]", "").split(",");
+                for(int j = 0; j < keys.length;j++)
+                    keys[j] = keys[j].trim();
+                if ((keys.length == 1 && keys[0].equals("*")) || Arrays.asList(keys).contains(key)) {
+                    String methodName = listener.getUpdateMethods().get(i);
+                    Class<?> clazz = listener.getListenerClass();
+                    Object clazzObj = listener.getListenerObj();
+                    try {
+                        Method method = clazz.getMethod(methodName, Context.class, String.class, Object.class);
+                        method.invoke(clazzObj, context, key, value);
+                    } catch (NoSuchMethodException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e1) {
+                        Log.e(TAG, "One of the UpdateTarget methods has an internal error, meaning something isn't right in the code you wrote.\nClass name: " + clazzObj.getClass().getCanonicalName() + ", method: " + methodName);
+                        Log.wtf(TAG, "The error;", e1);
+                    }
+                }
+            }
+    }
+
+
+    private void createListeners() {
+        try {
+            for (int i = 0; i < listeners.length; i += 3) {
+                String className = listeners[i];
+                String methodName = listeners[i + 1];
+                String listenerKeys = listeners[i + 2];
+
+                Class<?> clazz = Class.forName(className);
+                Object obj = clazz.newInstance();
+
+                boolean foundListener = false;
+                if(mUpdateTargets.size() > 0)
+                    for (UpdateListener listener : mUpdateTargets)
+                        if (listener.getListenerClass().isInstance(obj)) {
+                            listener.addNewUpdateMethod(methodName, listenerKeys);
+                            foundListener = true;
+                            break;
+                        }
+                if (foundListener)
+                    continue;
+                UpdateListener newListener = new UpdateListener(obj, clazz);
+                newListener.addNewUpdateMethod(methodName, listenerKeys);
+                mUpdateTargets.add(newListener);
+            }
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private class UpdateListener {
+
+        private Object listenerObj;
+        private Class<?> listenerClass;
+        private List<String> updateMethods;
+        private List<String> updateMethodsKeys;
+
+        UpdateListener(Object listenerObj, Class<?> listenerClass) {
+            this.listenerObj = listenerObj;
+            this.listenerClass = listenerClass;
+            updateMethods = new LinkedList<>();
+            updateMethodsKeys = new LinkedList<>();
+        }
+
+        UpdateListener(Object listenerObj, Class<?> listenerClass, List<String> updateMethods, List<String> updateMethodsKeys) {
+            this.listenerObj = listenerObj;
+            this.listenerClass = listenerClass;
+            this.updateMethods = updateMethods;
+            this.updateMethodsKeys = updateMethodsKeys;
+        }
+
+        Object getListenerObj() {
+            return listenerObj;
+        }
+
+        Class<?> getListenerClass() {
+            return listenerClass;
+        }
+
+        List<String> getUpdateMethods() {
+            return updateMethods;
+        }
+
+        List<String> getUpdateMethodsKeys() {
+            return updateMethodsKeys;
+        }
+
+        void addNewUpdateMethod(@NonNull String methodName, @NonNull String keys) {
+            updateMethods.add(methodName);
+            updateMethodsKeys.add(keys);
+        }
+
+    }
+}

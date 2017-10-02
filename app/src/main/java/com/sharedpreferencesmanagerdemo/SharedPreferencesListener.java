@@ -9,10 +9,14 @@ import android.widget.Toast;
 import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPListener;
 import com.aongoltzcrank.sharedpreferencesmanager.annotations.SPUpdateTarget;
 
-@SPListener
-class SPUpdater {
+/**
+ * Created by Alon on 10/2/2017.
+ */
 
-    private static final String TAG = SPUpdater.class.getSimpleName();
+@SPListener
+public class SharedPreferencesListener {
+
+    private static final String TAG = SharedPreferencesListener.class.getSimpleName();
 
     @SPUpdateTarget
     public void onUpdate(Context context, String key, Object value) {
@@ -45,4 +49,5 @@ class SPUpdater {
         Log.d(TAG, "onUpdateSpecific() called with: context = [" + context + "], key = [" + key + "], value = [" + value + "]");
         Toast.makeText(context, value.toString(), Toast.LENGTH_SHORT).show();
     }
+
 }
