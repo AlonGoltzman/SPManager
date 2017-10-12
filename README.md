@@ -105,7 +105,7 @@ You can also get a value from the SP.
 ##  SPManager integration with gradle
 To include the sdk in your projects, add the following to `build.gradle`:
 
->compile 'com.aongoltzcrank:sharedpreferencesmanager:1.0'
+>compile 'com.aongoltzcrank:sharedpreferencesmanager:1.0.1'
 
 
 ## Bugs
